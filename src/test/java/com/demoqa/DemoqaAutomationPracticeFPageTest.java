@@ -131,7 +131,6 @@ class DemoqaAutomationPracticeFPageTest {
                 "Student current address is not correct");
 
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPagePopup.close();
-        assertThatException().isThrownBy(demoqaAutomationPracticeFPagePopup::isDisplayed);
     }
 
 }

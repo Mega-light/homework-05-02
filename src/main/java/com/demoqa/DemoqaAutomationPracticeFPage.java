@@ -56,8 +56,8 @@ public class DemoqaAutomationPracticeFPage {
     @FindBy(id = "city")
     private WebElement citySelect;
 
-    @FindBy(id = "submit")
-    private WebElement submit;
+    @FindBy(id = "userForm")
+    private WebElement userForm;
 
     // ----------- Date Picker -----------------------------
     @FindBy(className = "react-datepicker__month-select")
@@ -179,7 +179,7 @@ public class DemoqaAutomationPracticeFPage {
     }
 
     public DemoqaAutomationPracticeFPagePopup submitForm(){
-        submit.click();
+        userForm.submit();
         return new DemoqaAutomationPracticeFPagePopup(driver);
     }
 
