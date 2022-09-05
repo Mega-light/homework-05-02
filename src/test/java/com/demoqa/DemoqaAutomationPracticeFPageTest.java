@@ -70,6 +70,7 @@ class DemoqaAutomationPracticeFPageTest {
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.typeEmail(email);
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.typeMobileNumber(mobile);
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.addSubject(subjects.get(0));
+        demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.addSubject(subjects.get(1));
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.typeCurrentAddress(currentAddress);
 
         softAssert.assertEquals(demoqaAutomationPracticeFPage.getFirstNameText(), firstName,

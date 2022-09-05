@@ -117,15 +117,10 @@ public class DemoqaAutomationPracticeFPage {
         return this;
     }
 
-    // FIXME: addSubject(String subject)
     public DemoqaAutomationPracticeFPage addSubject(String subject){
         subjectsInput.sendKeys(subject);
         driver.findElement(By.id("react-select-2-option-0")).click();
-//        this.userSubjectsContainer.findElement(By.cssSelector(".subjects-auto-complete__control")).click();
-//        this.userSubjectsContainer.sendKeys(subject);
-//        this.userSubjectsContainer.click();
-
-        throw new UnsupportedOperationException("addSubject method is not implemented yet.");
+        return this;
     }
 
     public DemoqaAutomationPracticeFPage checkHobby(@NotNull Hobby hobby){
@@ -210,7 +205,7 @@ public class DemoqaAutomationPracticeFPage {
 
     // FIXME: getUserSubjectsContainerText()
     public String getUserSubjectsContainerText() {
-        return subjectsInput.getText();
+        return subjectsInput.getAttribute("value");
     }
 
     public List<String > getMenuSubjects() {
