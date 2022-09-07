@@ -1,11 +1,16 @@
 package com.demoqa.component;
 
-import com.demoqa.DemoqaAutomationPracticeFPage;
+import com.demoqa.pages.DemoqaAutomationPracticeFPage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 
 // Popup of https://demoqa.com/automation-practice-form
@@ -85,16 +90,19 @@ public class DemoqaAutomationPracticeFPagePopup {
         return mobile.getText();
     }
 
-    public String getDob(){
-        return dob.getText();
+    public LocalDate getDob(){
+        DateTimeFormatter dobTextFormat = DateTimeFormatter.ofPattern("dd MMMM,yyyy");
+        return LocalDate.parse(dob.getText(), dobTextFormat);
     }
 
-    public String getSubjects(){
-        return subjects.getText();
+    public List<String> getSubjects(){
+        String[] split = subjects.getText().split(", ");
+        return Arrays.asList(split);
     }
 
-    public String getHobbies(){
-        return hobbies.getText();
+    public List<String> getHobbies(){
+        String[] split = hobbies.getText().split(", ");
+        return Arrays.asList(split);
     }
 
     public String getPicturePath(){

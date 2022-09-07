@@ -1,33 +1,23 @@
-package com.demoqa;
+package com.demoqa.tests.forms;
 
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
+import com.demoqa.pages.DemoqaAutomationPracticeFPage;
+import com.demoqa.pages.DemoqaFormsPage;
+import com.demoqa.tests.base.BaseTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import utils.DriverFactory;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 
-class DemoqaFormsPageTest {
+class DemoqaFormsPageTest extends BaseTest {
 
     private DemoqaFormsPage demoqaFormsPage;
-    private WebDriver driver;
-
-    @AfterMethod
-    void tearDown() {
-        driver.quit();
-    }
 
     @BeforeMethod
-    @Parameters({"URL", "BrowserType"})
-    public void setUp(String url, String browserType) {
-        driver = DriverFactory.getDriver(browserType);
-        driver.get(url);
-        driver.manage().window().maximize();
+    public void setUp() {
         demoqaFormsPage = new DemoqaFormsPage(driver);
+        demoqaFormsPage.goToFormsPage();
     }
 
     @Test
@@ -38,7 +28,7 @@ class DemoqaFormsPageTest {
         // Then
         String expectedUrl = "https://demoqa.com/automation-practice-form";
         assertNotNull(demoqaFormsPage);
-        assertTrue(driver.getCurrentUrl().contentEquals(expectedUrl));
+        assertTrue(demoqaFormsPage.getCurrentURL().contentEquals(expectedUrl));
     }
 
 }

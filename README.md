@@ -2,11 +2,9 @@
 
 ## Instructions
 
-Define in the testng.xml ([demoqa.xml](src/test/resources/demoqa.xml),
-[demoqa_forms.xml](src/test/resources/demoqa_forms.xml) and
-[demoqa_automationpracticef.xml](src/test/resources/demoqa_automationpracticef.xml))
-the browsers you wish to support.
-Then modify [DriverFactory.java](src/test/java/utils/DriverFactory.java) to instantiate such browsers.
+Define in the [testng.xml](src/test/resources/testng.xml) the browsers you wish to support.
+Modify [DriverFactory.java](src/test/java/utils/DriverFactory.java) to instantiate such browsers
+in case you do not wish to use [WebDriverManager](https://bonigarcia.dev/webdrivermanager/).
 
 ## Exercise
 ![](screenshots/demoqa_homepage.png)

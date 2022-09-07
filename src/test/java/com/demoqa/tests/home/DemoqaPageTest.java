@@ -1,30 +1,22 @@
-package com.demoqa;
+package com.demoqa.tests.home;
 
-import org.openqa.selenium.WebDriver;
+import com.demoqa.pages.DemoqaFormsPage;
+import com.demoqa.pages.DemoqaPage;
+import com.demoqa.tests.base.BaseTest;
 import org.testng.annotations.*;
-import utils.DriverFactory;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-class DemoqaPageTest {
+class DemoqaPageTest extends BaseTest {
 
     private DemoqaPage demoqaPage;
-    private WebDriver driver;
-
-    @AfterClass
-    public void tearDown() {
-        driver.quit();
-    }
 
     @BeforeClass
-    @Parameters({"URL", "BrowserType"})
-    public void setUp(String url, String browserType){
+    public void setUp(){
         // Given
-        driver = DriverFactory.getDriver(browserType);
-        driver.manage().window().maximize();
-        driver.get(url);
         demoqaPage = new DemoqaPage(driver);
+        demoqaPage.goToHomePage();
     }
 
     @Test
@@ -35,7 +27,7 @@ class DemoqaPageTest {
         // Then
         String expectedUrl = "https://demoqa.com/forms";
         assertNotNull(demoqaFormsPage);
-        assertTrue(driver.getCurrentUrl().contentEquals(expectedUrl));
+        assertTrue(demoqaFormsPage.getCurrentURL().contentEquals(expectedUrl));
 
     }
 
