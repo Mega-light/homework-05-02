@@ -2,8 +2,10 @@ package com.demoqa.pages;
 
 import com.demoqa.component.DatePicker;
 import com.demoqa.component.DemoqaAutomationPracticeFPagePopup;
+import com.demoqa.component.State;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,25 +16,26 @@ import java.util.Set;
 // page_url = https://demoqa.com/automation-practice-form
 public class DemoqaAutomationPracticeFPage extends BasePage{
     private final String baseUrl = "https://demoqa.com/automation-practice-form";
-    private final By firstNameBy = By.id("firstName");
-    private final By lastNameBy = By.id("lastName");
-    private final By userEmailBy = By.id("userEmail");
-    private final By userNumberBy = By.id("userNumber");
-    private final By userDobBy = By.id("dateOfBirthInput");
-    private final By subjectsInputBy = By.id("subjectsInput");
-    private final By uploadPictureBy = By.id("uploadPicture");
-    private final By currentAddressBy = By.id("currentAddress");
+    private final By txtFirstName = By.id("firstName");
+    private final By txtLastName = By.id("lastName");
+    private final By txtEmail = By.id("userEmail");
+    private final By txtMobileNumber = By.id("userNumber");
+    private final By txtDob = By.id("dateOfBirthInput");
+    private final By txtSubjectsInput = By.id("subjectsInput");
+    private final By fileInputPicture = By.id("uploadPicture");
+    private final By txaCurrentAddress = By.id("currentAddress");
     private final By subjectsAutoCompleteBy = By.className("subjects-auto-complete__value-container");
     private final String stateById = "state";
     private final String cityById = "city";
-    private final By stateBy = By.id(stateById);
-    private final By cityBy = By.id(cityById);
-    private final By userFormBy = By.id("userForm");
+    private final By divState = By.id(stateById);
+    private final By divCity = By.id(cityById);
+    private final By frmUserForm = By.id("userForm");
 
     // ----------- Date Picker -----------------------------
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d MMM uuuu");
     private final DatePicker datePicker;
     // ---------------------------------------------------
+    private final By divGoogleAd = By.id("adplus-anchor");
 
     public DemoqaAutomationPracticeFPage(@NotNull WebDriver driver) {
         super(driver);
@@ -40,17 +43,20 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
     }
 
     public DemoqaAutomationPracticeFPage setFirstName(String firstName){
-        typeText(firstNameBy, firstName);
+        scrollIntoView(txtFirstName);
+        typeText(txtFirstName, firstName);
         return this;
     }
 
     public DemoqaAutomationPracticeFPage setLastName(String lastName){
-        typeText(lastNameBy, lastName);
+        scrollIntoView(txtLastName);
+        typeText(txtLastName, lastName);
         return this;
     }
 
     public DemoqaAutomationPracticeFPage setEmail(String email){
-        typeText(userEmailBy, email);
+        scrollIntoView(txtEmail);
+        typeText(txtEmail, email);
         return this;
     }
 
@@ -60,18 +66,21 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
     }
 
     public DemoqaAutomationPracticeFPage setMobileNumber(String mobileNumber){
-        typeText(userNumberBy, mobileNumber);
+        scrollIntoView(txtMobileNumber);
+        typeText(txtMobileNumber, mobileNumber);
         return this;
     }
 
     public DemoqaAutomationPracticeFPage setDob(@NotNull LocalDate localDate){
-        click(userDobBy);
+        scrollIntoView(txtDob);
+        click(txtDob);
         datePicker.setDate(localDate);
         return this;
     }
 
     public DemoqaAutomationPracticeFPage addSubject(String subject){
-        typeText(subjectsInputBy, subject);
+        scrollIntoView(txtSubjectsInput);
+        typeText(txtSubjectsInput, subject);
         click(By.id("react-select-2-option-0"));
         return this;
     }
@@ -108,59 +117,72 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
     }
 
     public DemoqaAutomationPracticeFPage setPicture(String picturePath){
-        typeText(uploadPictureBy, picturePath);
+        scrollIntoView(fileInputPicture);
+        typeText(fileInputPicture, picturePath);
         return this;
     }
 
     public DemoqaAutomationPracticeFPage setCurrentAddress(String currentAddress){
-        typeText(currentAddressBy, currentAddress);
+        scrollIntoView(txaCurrentAddress);
+        typeText(txaCurrentAddress, currentAddress);
         return this;
     }
 
-    public DemoqaAutomationPracticeFPage setState(@NotNull State state) {
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        String scrollIntoView = "arguments[0].scrollIntoView();";
-        javascriptExecutor.executeScript(scrollIntoView, find(stateBy));
-        click(stateBy);
+    private DemoqaAutomationPracticeFPage setState(@NotNull State state) {
+        scrollIntoView(divState);
+        click(divState);
         click(state.getBy());
         return this;
     }
 
-    // FIXME: setCitySelect(String keys)
-    public DemoqaAutomationPracticeFPage setCity(String keys) {
-//        findFromOptionFromDropdown(citySelect, keys).click();
+    public DemoqaAutomationPracticeFPage setStateAndCity(@NotNull State state, String city) {
+        setState(state);
+        if (state.getCities().contains(city)){
+            setCity(city);
+        } else {
+            throw new IllegalArgumentException("City is not part of " + state);
+        }
+        return this;
+    }
 
+    private DemoqaAutomationPracticeFPage setCity(String city) {
+        scrollIntoView(divCity);
+        click(divCity);
+        typeText(By.id("react-select-4-input"), city);
+        //WebElement menuCities = find(By.cssSelector("div#city > div:nth-child(2) > div:first-child"));
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).perform();
         return this;
     }
 
     public DemoqaAutomationPracticeFPagePopup submitForm(){
-        find(userFormBy).submit();
+        find(frmUserForm).submit();
         return new DemoqaAutomationPracticeFPagePopup(driver);
     }
 
     public String getFirstNameText() {
-        return getAttributeValue(firstNameBy);
+        return getAttributeValue(txtFirstName);
     }
 
     public String getLastNameText() {
-        return getAttributeValue(lastNameBy);
+        return getAttributeValue(txtLastName);
     }
 
     public String getEmailText() {
-        return getAttributeValue(userEmailBy);
+        return getAttributeValue(txtEmail);
     }
 
     public String getMobileNumberText() {
-        return getAttributeValue(userNumberBy);
+        return getAttributeValue(txtMobileNumber);
     }
 
     public LocalDate getDobValue(){
-        return LocalDate.parse(getAttributeValue(userDobBy), dateTimeFormatter);
+        return LocalDate.parse(getAttributeValue(txtDob), dateTimeFormatter);
     }
 
     // FIXME: getUserSubjectsContainerText()
     public String getUserSubjectsContainerText() {
-        return getAttributeValue(subjectsInputBy);
+        return getAttributeValue(txtSubjectsInput);
     }
 
     public List<String > getMenuSubjects() {
@@ -173,7 +195,7 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
     }
 
     public String getCurrentAddressText() {
-        return getAttributeValue(currentAddressBy);
+        return getAttributeValue(txaCurrentAddress);
     }
 
     public String getState() {
@@ -212,12 +234,13 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
         setCurrentAddress(currentAddress);
         setState(state);
         setCity(city);
-        submitForm(userFormBy);
+        submitForm(frmUserForm);
         return new DemoqaAutomationPracticeFPagePopup(driver);
     }
 
     public DemoqaAutomationPracticeFPage goToAutomationPracticeForm() {
         driver.get(baseUrl);
+        removeElement(divGoogleAd);
         return new DemoqaAutomationPracticeFPage(driver);
     }
 
@@ -252,34 +275,4 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
         }
     }
 
-    public enum State{
-        NCR(By.id("react-select-3-option-0")),
-        UTTAR_PRADESH(By.id("react-select-3-option-1")),
-        HARYANA(By.id("react-select-3-option-2")),
-        RAJASTHAN(By.id("react-select-3-option-3"));
-
-        private final By by;
-        State(By by){
-            this.by = by;
-        }
-
-        public By getBy() {
-            return by;
-        }
-
-        @Override
-        public String toString() {
-            String[] s = name().split("_");
-            StringBuilder word = new StringBuilder();
-            if (s.length > 1){
-                for (String w : s) {
-                    word.append(w.substring(0, 1)).append(w.substring(1)).append(" ");
-                }
-            } else {
-                String w = s[0];
-                word.append(w.substring(0, 1)).append(w.substring(1));
-            }
-            return word.toString();
-        }
-    }
 }

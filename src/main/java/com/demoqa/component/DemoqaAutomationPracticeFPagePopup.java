@@ -18,40 +18,40 @@ public class DemoqaAutomationPracticeFPagePopup {
     private final WebDriver driver;
 
     @FindBy(className = "modal-content")
-    private WebElement popup;
+    private WebElement divPopup;
 
     @FindBy(css = "table > tbody > tr:nth-child(1) > td:nth-child(2)")
-    private WebElement studentName;
+    private WebElement tdFullName;
 
     @FindBy(css = "table > tbody > tr:nth-child(2) > td:nth-child(2)")
-    private WebElement studentEmail;
+    private WebElement tdEmail;
 
     @FindBy(css = "table > tbody > tr:nth-child(3) > td:nth-child(2)")
-    private WebElement gender;
+    private WebElement tdGender;
 
     @FindBy(css = "table > tbody > tr:nth-child(4) > td:nth-child(2)")
-    private WebElement mobile;
+    private WebElement tdMobileNumber;
 
     @FindBy(css = "table > tbody > tr:nth-child(5) > td:nth-child(2)")
-    private WebElement dob;
+    private WebElement tdDob;
 
     @FindBy(css = "table > tbody > tr:nth-child(6) > td:nth-child(2)")
-    private WebElement subjects;
+    private WebElement tdSubjects;
 
     @FindBy(css = "table > tbody > tr:nth-child(7) > td:nth-child(2)")
-    private WebElement hobbies;
+    private WebElement tdHobbies;
 
     @FindBy(css = "table > tbody > tr:nth-child(8) > td:nth-child(2)")
-    private WebElement picturePath;
+    private WebElement tdPicturePath;
 
     @FindBy(css = "table > tbody > tr:nth-child(9) > td:nth-child(2)")
-    private WebElement address;
+    private WebElement tdAddress;
 
     @FindBy(css = "table > tbody > tr:nth-child(10) > td:nth-child(2)")
-    private WebElement stateAndCity;
+    private WebElement tdStateAndCity;
 
     @FindBy(id = "closeLargeModal")
-    private WebElement closeBtn;
+    private WebElement btnClose;
 
     public DemoqaAutomationPracticeFPagePopup(@NotNull WebDriver driver) {
         this.driver = driver;
@@ -66,55 +66,55 @@ public class DemoqaAutomationPracticeFPagePopup {
     }
 
     public DemoqaAutomationPracticeFPage close(){
-        closeBtn.click();
+        btnClose.click();
         return new DemoqaAutomationPracticeFPage(driver);
     }
 
     public boolean isDisplayed() {
-        return popup.isDisplayed();
+        return divPopup.isDisplayed();
     }
 
-    public String getStudentName(){
-        return studentName.getText();
+    public String getFullName(){
+        return tdFullName.getText();
     }
 
-    public String getStudentEmail(){
-        return studentEmail.getText();
+    public String getEmail(){
+        return tdEmail.getText();
     }
 
     public String getGender(){
-        return gender.getText();
+        return tdGender.getText();
     }
 
-    public String getMobile(){
-        return mobile.getText();
+    public String getMobileNumber(){
+        return tdMobileNumber.getText();
     }
 
     public LocalDate getDob(){
         DateTimeFormatter dobTextFormat = DateTimeFormatter.ofPattern("dd MMMM,yyyy");
-        return LocalDate.parse(dob.getText(), dobTextFormat);
+        return LocalDate.parse(tdDob.getText(), dobTextFormat);
     }
 
     public List<String> getSubjects(){
-        String[] split = subjects.getText().split(", ");
+        String[] split = tdSubjects.getText().split(", ");
         return Arrays.asList(split);
     }
 
     public List<String> getHobbies(){
-        String[] split = hobbies.getText().split(", ");
+        String[] split = tdHobbies.getText().split(", ");
         return Arrays.asList(split);
     }
 
     public String getPicturePath(){
-        return picturePath.getText();
+        return tdPicturePath.getText();
     }
 
     public String getAddress(){
-        return address.getText();
+        return tdAddress.getText();
     }
 
     public String getStateAndCity(){
-        return stateAndCity.getText();
+        return tdStateAndCity.getText();
     }
 
 }

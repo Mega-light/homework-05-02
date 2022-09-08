@@ -1,6 +1,7 @@
 package com.demoqa.tests.automationpracticeform;
 
 import com.demoqa.component.DemoqaAutomationPracticeFPagePopup;
+import com.demoqa.component.State;
 import com.demoqa.pages.DemoqaAutomationPracticeFPage;
 import com.demoqa.tests.base.BaseTest;
 import org.testng.annotations.*;
@@ -39,8 +40,8 @@ class DemoqaAutomationPracticeFPageTest extends BaseTest {
         subjects.add("Computer Science");
         LocalDate dob = LocalDate.of(2000, Month.JANUARY, 1);
         String picturePath = new File("screenshots/demoqa_homepage.png").getAbsolutePath();
-        DemoqaAutomationPracticeFPage.State state = DemoqaAutomationPracticeFPage.State.NCR;
-        String city = "Delhi";
+        State state = State.NCR;
+        String city = "Gurgaon";
         // --------------------------------------------------------------------
 
 
@@ -57,8 +58,7 @@ class DemoqaAutomationPracticeFPageTest extends BaseTest {
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.checkHobbies(hobbies);
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.setPicture(picturePath);
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.setCurrentAddress(currentAddress);
-        demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.setState(state);
-        demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.setCity(city);
+        demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPage.setStateAndCity(state, city);
 
         softAssert.assertEquals(demoqaAutomationPracticeFPage.getFirstNameText(), firstName,
                 "First name field not correct");
@@ -76,6 +76,8 @@ class DemoqaAutomationPracticeFPageTest extends BaseTest {
                 "Date of Birth is not correct");
         softAssert.assertEquals(demoqaAutomationPracticeFPage.getState().toUpperCase(), state.toString().toUpperCase(),
                 "State is not correct");
+        softAssert.assertEquals(demoqaAutomationPracticeFPage.getCity().toUpperCase(), city.toUpperCase(),
+                "City is not correct");
 
         softAssert.assertAll();
         // Click on "Submit" button
@@ -85,13 +87,13 @@ class DemoqaAutomationPracticeFPageTest extends BaseTest {
         // Once submitted validate that the pop-up is shown and the information
         // is correct, then close the pop-up
         assertTrue(demoqaAutomationPracticeFPagePopup.isDisplayed());
-        assertEquals(demoqaAutomationPracticeFPagePopup.getStudentName(), firstName + " " + lastName,
+        assertEquals(demoqaAutomationPracticeFPagePopup.getFullName(), firstName + " " + lastName,
                 "Name is not correct");
-        assertEquals(demoqaAutomationPracticeFPagePopup.getStudentEmail(), email,
+        assertEquals(demoqaAutomationPracticeFPagePopup.getEmail(), email,
                 "Email is not correct");
         assertEquals(demoqaAutomationPracticeFPagePopup.getGender().toUpperCase(), gender.toString(),
                 "Gender is not correct");
-        assertEquals(demoqaAutomationPracticeFPagePopup.getMobile(), mobile,
+        assertEquals(demoqaAutomationPracticeFPagePopup.getMobileNumber(), mobile,
                 "Mobile number is not correct");
         assertEquals(demoqaAutomationPracticeFPagePopup.getDob(), dob,
                 "Date of birth is not correct");
@@ -103,6 +105,8 @@ class DemoqaAutomationPracticeFPageTest extends BaseTest {
         assertTrue(picturePath.contains(pictureResult), "Student picture is not uploaded");
         assertEquals(demoqaAutomationPracticeFPagePopup.getAddress(), currentAddress,
                 "Current address is not correct");
+        assertEquals(demoqaAutomationPracticeFPagePopup.getStateAndCity(), state + " " + city,
+                "State and City are not correct");
 
         demoqaAutomationPracticeFPage = demoqaAutomationPracticeFPagePopup.close();
     }

@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 public class DemoqaPage extends BasePage {
     private final String baseUrl = "https://demoqa.com/";
 
-    private final By formsCardBy = By.cssSelector(".card:nth-child(2) svg");
+    private final By svgFormsCard = By.cssSelector(".card:nth-child(2) svg");
 
     public DemoqaPage(@NotNull WebDriver driver) {
         super(driver);
@@ -20,7 +20,7 @@ public class DemoqaPage extends BasePage {
     }
 
     public DemoqaFormsPage clickFormsCard(){
-        click(formsCardBy);
+        click(svgFormsCard);
         return new DemoqaFormsPage(driver);
     }
 }

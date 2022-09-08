@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 public class DemoqaFormsPage extends BasePage{
 
     private final String baseUrl = "https://demoqa.com/forms";
-    private final By practiceFormItemBy = By.cssSelector(".show .text");
+    private final By spnPracticeFormItem = By.cssSelector(".show .text");
 
     public DemoqaFormsPage(@NotNull WebDriver driver) {
         super(driver);
@@ -21,7 +21,7 @@ public class DemoqaFormsPage extends BasePage{
     }
 
     public DemoqaAutomationPracticeFPage clickPracticeForm(){
-        click(practiceFormItemBy);
+        click(spnPracticeFormItem);
         return new DemoqaAutomationPracticeFPage(driver);
     }
 }

@@ -1,9 +1,6 @@
 package com.demoqa.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -55,6 +52,12 @@ abstract class BasePage {
         return find(elementBy).getText();
     }
 
+    protected void scrollIntoView(By elementBy){
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        String scrollIntoView = "arguments[0].scrollIntoView();";
+        javascriptExecutor.executeScript(scrollIntoView, find(elementBy));
+    }
+
     protected boolean isDisplayed(By elementBy){
         boolean result;
         try {
@@ -71,6 +74,21 @@ abstract class BasePage {
 
     protected String getAttributeValue(By elementBy){
         return find(elementBy).getAttribute("value");
+    }
+
+    protected boolean removeElement(By elementBy){
+        boolean result;
+        try {
+            JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+            javascriptExecutor.executeScript(
+                    "let iframe = arguments[0];"
+                            + "iframe.parentNode.removeChild(iframe)",
+                    find(elementBy));
+            result = true;
+        } catch (NoSuchElementException e){
+            result = false;
+        }
+        return result;
     }
 
 }
