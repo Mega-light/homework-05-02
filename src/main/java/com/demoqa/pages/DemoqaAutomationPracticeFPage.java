@@ -239,7 +239,7 @@ public class DemoqaAutomationPracticeFPage extends BasePage{
     }
 
     public DemoqaAutomationPracticeFPage goToAutomationPracticeForm() {
-        driver.get(baseUrl);
+        visit(baseUrl);
         removeElement(divGoogleAd);
         return new DemoqaAutomationPracticeFPage(driver);
     }

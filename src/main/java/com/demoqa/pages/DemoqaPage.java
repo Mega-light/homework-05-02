@@ -15,7 +15,7 @@ public class DemoqaPage extends BasePage {
     }
 
     public DemoqaPage goToHomePage(){
-        driver.get(baseUrl);
+        visit(baseUrl);
         return new DemoqaPage(driver);
     }
 

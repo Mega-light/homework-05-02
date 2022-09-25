@@ -16,7 +16,7 @@ public class DemoqaFormsPage extends BasePage{
     }
 
     public DemoqaFormsPage goToFormsPage(){
-        driver.get(baseUrl);
+        visit(baseUrl);
         return new DemoqaFormsPage(driver);
     }
 

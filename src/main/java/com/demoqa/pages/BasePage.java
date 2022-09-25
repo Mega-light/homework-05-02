@@ -91,4 +91,15 @@ abstract class BasePage {
         return result;
     }
 
+    protected String getMessageAlert(){
+        String parent = driver.getWindowHandle();
+        String text = driver.switchTo().alert().getText();
+        driver.switchTo().window(parent);
+        return text;
+    }
+
+    protected void visit(String url){
+        driver.get(url);
+    }
+
 }
